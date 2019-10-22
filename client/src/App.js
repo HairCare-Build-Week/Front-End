@@ -1,20 +1,23 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 // STYLING
-import GlobalStyle from './component/styled-components/GlobalStyle';
+import GlobalStyle from './components/styled-components/GlobalStyle';
 
 // CONTEXTS MANAGE STATE
-import UserProvider from './component/contexts/UserContext';
-import DataProvider from './component/contexts/DataContext';
+import UserProvider from './components/contexts/UserContext';
+import DataProvider from './components/contexts/DataContext';
 
 //COMPONENTS
-import Nav from './component/Nav';
-import SearchPage from './component/SearchPage';
-import Reviews from './component/Reviews';
-
+import Nav from './components/Nav';
+import SearchPage from './components/SearchPage';
+import Reviews from './components/Reviews';
+import StylistDash from './components/StylistDash';
+import Home from './components/Home';
+import SignUp from './components/SignUp';
 
 function App() {
   return (
@@ -28,10 +31,12 @@ function App() {
           <Route exact path='/' render={()=> <Redirect to='login'/>}/>
           <Route path='/search' component={SearchPage}/>
           <Route path='/review' component={Reviews} />
+          <Route path='/dash' component={StylistDash} />
+          <Route path="/home" component={Home} />
+          <Route path="/sign-up" component={SignUp}/>
 
 
           {/* <Route path='/login' component={Login}/>
-          <Route path='/signup' component={Signup} /> 
           <PrivateRoute path='/ClientDash' component={ClientDash}/>
           <PrivateRoute path='/StylistDash' component={StylistDash}/>*/}
           
@@ -40,14 +45,10 @@ function App() {
       </DataProvider>
       </UserProvider>
       
+      
     </div>
   );
 }
 
 export default App;
 
-
-const Title = styled.h1`
-  font-size: 48px;
-  color: blue
-  `;

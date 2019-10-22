@@ -17,6 +17,7 @@ function Nav(props) {
 
     return(
         <NavBar>
+            <img src='../images/logo.jpg' alt='logo purple girl'/>
             {props.location.pathname === '/login' && (
                 <NavLink to='/login'>Login</NavLink>
             )}
@@ -27,9 +28,9 @@ function Nav(props) {
 
           <NavLink to='/search' >Search</NavLink>
           <NavLink to='/review' >Reviews</NavLink>
-          <NavLink to='/review' >My Profile</NavLink>
-
-
+          <NavLink to='/dash' >My Profile</NavLink>
+          <NavLink to='/home'>Home</NavLink>
+          {/* <NavLink to='/sign-up'>Signup</NavLink> */}
             
 
             {/* {props.location.getItem('usertype') === '/stylist' && (
@@ -65,9 +66,12 @@ const NavBar = styled.nav`
     justify-content: center;
     align-items: center;
     min-height: 40px;
-
+    justify-content: space-evenly;
     a{
         text-decoration: none;
         color: white;
+    }
+    img{
+        // max-height: 100%;
     }
 `;
