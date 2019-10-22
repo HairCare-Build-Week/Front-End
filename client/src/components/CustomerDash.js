@@ -45,11 +45,11 @@ const CustomerDash = props => {
             <h3>Your Saved Stylists</h3>
             <div>
             <SavedCard>
+                <h4 onClick={handleDelete}>X</h4>
                 <NavLink 
-                to={`/stylist/${props.stylist.id}`}
-                key={props.stylist.id}
+                to={`/stylist-dash`}
+                // key={props.stylist.id}
                 >
-                    <h4 onClick={handleDelete}>X</h4>
                     <img alt='saved stylists' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
                     <p>Stylist Name</p>
                 </NavLink>
@@ -113,19 +113,24 @@ const Saved = styled.div`
 `;
 
 const SavedCard = styled.div`
-    width: 100px;
+    width: 150px;
     flex-direction: column;
     margin: 5px;
+    p{ font-size: 1.25rem}
     }
     img{
-        height: 100px;
-        width: 100px;
+        height: 150px;
+        width: 150px;
         object-fit: cover;
     }
     h4{
         text-align: right;
         font-size: 1.25rem;
         :hover{color: #80808095}
+    }
+    a{
+        text-decoration: none;
+        color: black;
     }
     :hover{transform: scale(1.05); cursor: pointer}
 `;
