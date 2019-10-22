@@ -24,7 +24,7 @@ export default function SignUp(props) {
 
         <Form.Group /*as={Col}*/ controlId="formGridCity">
           <Form.Label>City</Form.Label>
-          <Form.Control />
+          <Form.Control placeholder="City" type="text" />
         </Form.Group>
       </Form>
 
