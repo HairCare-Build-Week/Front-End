@@ -4,17 +4,17 @@ import styled from 'styled-components';
 import './App.css';
 
 // STYLING
-import GlobalStyle from './component/styled-components/GlobalStyle';
+import GlobalStyle from './components/styled-components/GlobalStyle';
 
 // CONTEXTS MANAGE STATE
-import UserProvider from './component/contexts/UserContext';
-import DataProvider from './component/contexts/DataContext';
+import UserProvider from './components/contexts/UserContext';
+import DataProvider from './components/contexts/DataContext';
 
 //COMPONENTS
-import Nav from './component/Nav';
-import SearchPage from './component/SearchPage';
-import Reviews from './component/Reviews';
-import StylistDash from './component/StylistDash';
+import Nav from './components/Nav';
+import SearchPage from './components/SearchPage';
+import Reviews from './components/Reviews';
+import StylistDash from './components/StylistDash';
 
 function App() {
   return (
