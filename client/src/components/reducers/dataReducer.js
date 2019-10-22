@@ -63,6 +63,12 @@ export const dataReducer = (state = initialState, action) => {
                 ...state,
                 city: action.payload
             }
+
+        case 'SET_STYLIST':
+            return{
+                ...state,
+                stylist: action.payload
+            }
         case 'ADD_REVIEW':
             return{
                 ...state,

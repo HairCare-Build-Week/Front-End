@@ -17,7 +17,8 @@ function Nav(props) {
 
     return(
         <NavBar>
-            <img src='../images/logo.jpg' alt='logo purple girl'/>
+            <img alt='logo purple girl' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
+
             {props.location.pathname === '/login' && (
                 <NavLink to='/login'>Login</NavLink>
             )}
@@ -27,8 +28,8 @@ function Nav(props) {
             )}
 
           <NavLink to='/search' >Search</NavLink>
-          <NavLink to='/review' >Reviews</NavLink>
-          <NavLink to='/dash' >My Profile</NavLink>
+          <NavLink to='/customer-dash'>Customer</NavLink>
+          <NavLink to='/stylist-dash'>Stylist</NavLink>
           <NavLink to='/home'>Home</NavLink>
           {/* <NavLink to='/sign-up'>Signup</NavLink> */}
             
@@ -61,7 +62,7 @@ export default withRouter(Nav);
 
 
 const NavBar = styled.nav`
-    background: gray; 
+    background: #9b3080; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,6 +73,6 @@ const NavBar = styled.nav`
         color: white;
     }
     img{
-        // max-height: 100%;
+        height: 100px;
     }
 `;

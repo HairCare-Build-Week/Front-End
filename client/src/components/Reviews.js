@@ -6,7 +6,7 @@ const Reviews = props => {
     return (
         <ReviewList>
             <h1>Reviews</h1>
-            <ReviewForm/>
+            {/* <ReviewForm/> */}
             <ul>
                 <li>Review:</li>
                 <li>Review:</li>
@@ -22,8 +22,8 @@ const Reviews = props => {
 export default Reviews;
 
 const ReviewList = styled.div`
-    width: 35%;
-    max-height: 40%;
+    width: 80%;
+    max-height: 30%;
     margin: 0 auto;
     text-align: left;
     ul li{
