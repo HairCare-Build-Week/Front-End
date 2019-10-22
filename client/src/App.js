@@ -3,10 +3,6 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-ro
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-//Components
-import Home from "./components/Home";
-import SignUp from "./components/SignUp";
-
 
 // STYLING
 import GlobalStyle from './components/styled-components/GlobalStyle';
@@ -36,12 +32,11 @@ function App() {
           <Route path='/search' component={SearchPage}/>
           <Route path='/review' component={Reviews} />
           <Route path='/dash' component={StylistDash} />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/sign-up" component={SignUp}/>
+          <Route path="/home" component={Home} />
+          <Route path="/sign-up" component={SignUp}/>
 
 
           {/* <Route path='/login' component={Login}/>
-          <Route path='/signup' component={Signup} /> 
           <PrivateRoute path='/ClientDash' component={ClientDash}/>
           <PrivateRoute path='/StylistDash' component={StylistDash}/>*/}
           

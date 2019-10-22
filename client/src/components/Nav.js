@@ -29,12 +29,8 @@ function Nav(props) {
           <NavLink to='/search' >Search</NavLink>
           <NavLink to='/review' >Reviews</NavLink>
           <NavLink to='/dash' >My Profile</NavLink>
-          <NavLink to='/home' >Home</NavLink>
-          <NavLink to='/sign-up'>Signup</NavLink>
-
-
-
-
+          <NavLink to='/home'>Home</NavLink>
+          {/* <NavLink to='/sign-up'>Signup</NavLink> */}
             
 
             {/* {props.location.getItem('usertype') === '/stylist' && (
