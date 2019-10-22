@@ -22,17 +22,16 @@ function SearchPage(data) {
     return(
         <div>
             <SearchBar>
-                <h1>Search Page</h1>
-            <form>
-                <input
-                id='city'
-                type='text'
-                name='textfield'
-                placeholder='Enter City'
-                value={searchTerm}
-                onChange={handleChange}/>
-                <button onClick={handleSubmit}>Search</button>
-            </form>
+                <h1>Now Viewing Stylists in {data.city}.</h1>
+                <form onSubmit={handleSubmit}>
+                    <input
+                    id='city'
+                    type='text'
+                    name='textfield'
+                    placeholder='Enter City'
+                    value={searchTerm}
+                    onChange={handleChange}/>
+                </form>
             </SearchBar>
 
             <SearchContainer>
@@ -51,10 +50,29 @@ export default SearchPage;
 
 
 const SearchContainer = styled.div`
-    border: 2px solid red;   
+    margin: 0 auto;  
+    width: 80%;
+    display: flex;
 `;
 
 const SearchBar = styled.form`
-    width: 45%;
-    margin: 0 auto;
+    width: 80%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    form{
+        border-bottom: 1.5px solid gray;
+        height: 30px;
+
+        button{
+            background: none;
+            border: 1px solid black;
+            padding: 7px;
+        }
+        input{
+            border: none;
+            width: 200px;
+        }
+    }
 `;

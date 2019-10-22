@@ -14,7 +14,7 @@ import DataProvider from './component/contexts/DataContext';
 import Nav from './component/Nav';
 import SearchPage from './component/SearchPage';
 import Reviews from './component/Reviews';
-
+import StylistDash from './component/StylistDash';
 
 function App() {
   return (
@@ -28,6 +28,9 @@ function App() {
           <Route exact path='/' render={()=> <Redirect to='login'/>}/>
           <Route path='/search' component={SearchPage}/>
           <Route path='/review' component={Reviews} />
+          <Route path='/dash' component={StylistDash} />
+
+
 
 
           {/* <Route path='/login' component={Login}/>
@@ -46,8 +49,3 @@ function App() {
 
 export default App;
 
-
-const Title = styled.h1`
-  font-size: 48px;
-  color: blue
-  `;
