@@ -1,0 +1,79 @@
+header{
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+
+    .signup-stylist{
+        width: 60rem;
+        padding: 2rem 0 2rem 0;
+
+        a{
+            padding-right: 3rem;   
+            font-size: 1.4rem;
+            color: black;
+            text-decoration: none;
+            
+            &:hover{
+                color: @pink;
+                text-decoration: underline;
+            }//closes hover  
+        }//close a
+    }//closes .signup-stylist
+    .signup-client{
+        width: 60rem;
+        text-align: right;
+        padding: 2rem 0 2rem 0;
+
+        a{
+            padding-left: 3rem;
+            font-size: 1.4rem;
+            color: black;
+            text-decoration: none; 
+            
+            &:hover{
+                color: @pink;
+                text-decoration: underline;
+            }//closes hover
+        }//closes a
+    }//closes .signup-client
+}//closes header
+
+.logo-nav{
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+
+    div{
+        width: 60rem;
+        margin: 5rem;
+    }//closes div
+    .home-navbar{
+        width: 60rem;
+        text-align: right;
+        font-size: 2rem;
+        padding-top: 3rem;
+
+        nav{
+            a{
+                padding-left: 2rem;
+                color: black;
+                text-decoration: none;
+
+                &:hover{
+                    color: @pink;
+                    text-decoration: underline;
+                }//closes hover
+            }//closes a
+            .home-login{
+                color: @pink;
+
+                &:hover{
+                    color: @black;
+                    text-decoration: underline;
+                }//closes hover
+            }//closes .home-login
+        }//closes nav
+    }//closes .home-navbar
+}//closes logo-nav
