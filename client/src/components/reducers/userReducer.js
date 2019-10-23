@@ -3,10 +3,10 @@
 export const initialUserState = {
     username: '',
     password: '',
-    usertype: '',
+    usertype: 'stylist' || 'customer',
     city: '',
     isStylist: false,
-    isClient: false,
+    isCustomer: false,
     isLoading: false,
     registeredUsers: []
 }
@@ -53,8 +53,8 @@ export const userReducer = (state = initialUserState, action) => {
             return {...state, isLoggedIn: true};
         case 'LOGIN_STYLIST':
             return {...state, isStylist: true};
-        case 'LOGIN_CLIENT':
-            return {...state, isClient: true};
+        case 'LOGIN_CUSTOMER':
+            return {...state, isCustomer: true};
 
         case 'REGISTRATION_SUCCESS':
             return{
@@ -63,6 +63,7 @@ export const userReducer = (state = initialUserState, action) => {
                 isLoading: false,
                 usertype: action.usertype,
                 username: action.username,
+                password: action.password,
                 city: action.city,
             };
 

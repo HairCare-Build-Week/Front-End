@@ -35,7 +35,6 @@ function SearchPage(data) {
             </SearchBar>
 
             <SearchContainer>
-                <SearchCard/>
                 <div className='search-results'>
                         {searchResults.map(stylist=> (
                             <SearchCard key = {stylist.id}/>
@@ -53,6 +52,7 @@ const SearchContainer = styled.div`
     margin: 0 auto;  
     width: 80%;
     display: flex;
+    border: 1px solid #80808095;
 `;
 
 const SearchBar = styled.form`

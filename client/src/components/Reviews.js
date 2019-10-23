@@ -1,12 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import ReviewForm from './ReviewForm';
+import {useUserContext} from './contexts/UserContext';
+
 
 const Reviews = props => {
+    const { user, dispatch } = useUserContext();
+
     return (
         <ReviewList>
             <h1>Reviews</h1>
-            {/* <ReviewForm/> */}
+            <ReviewForm/>
+            {user.isCustomer && (
+                <ReviewForm/>
+                )}
             <ul>
                 <li>Review:</li>
                 <li>Review:</li>
@@ -24,7 +31,7 @@ export default Reviews;
 const ReviewList = styled.div`
     width: 80%;
     max-height: 30%;
-    margin: 0 auto;
+    margin: 50px auto;
     text-align: left;
     ul li{
         padding: 10px;

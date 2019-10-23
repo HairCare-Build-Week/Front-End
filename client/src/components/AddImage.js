@@ -3,38 +3,35 @@ import {axiosWithAuth} from './utilis/axiosWithAuth';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
-const initialBio = {
-    name: '',
-    salon: '',
+const initialImage = {
     imageUrl: '',
-    bio: '',
-    address: ''
+    images: []
 }
 
 
-const EditBio = props => {
+const AddImage = props => {
     const [editing, setEditing] = useState(false);
-    const [bio, setBio] = useState(initialBio);
+    const [newImage, setNewImage] = useState(initialImage);
     
     const handleChange = ev => {
     ev.persist();
     let value = ev.target.value;
-    setBio({
-        ...bio,
+    setNewImage({
+        ...newImage,
         [ev.target.name]: value
         })
     }
 
     useEffect(()=> {
-    const bioToEdit = props.bio;
-    if (bioToEdit) setBio(bioToEdit);
-    }, [props.bio, props.match.params.id]);
+    const imagesToEdit = props.images;
+    if (imagesToEdit) setNewImage(imagesToEdit);
+    }, [props.images, props.match.params.id]);
 
 
     const handleSubmit = e => {
         e.preventDefault()
         axiosWithAuth()
-        .put(`${props.stylist}`, bio)
+        .put(`${props.stylist}`, newImage)
         .then(res=> {
             props.updateBio(res.data);
             props.history.push('/stylist-dash');
@@ -49,20 +46,20 @@ const EditBio = props => {
 // }
 
 return (
-    <div>
-        <h3>Edit Bio</h3>
-   
-        <EditForm onSubmit={handleSubmit}>
+    <div> 
+        <ImageForm onSubmit={handleSubmit}>
+        <h3>Select Image to Upload</h3>
             <input 
-            name='bio'
-            type='text'
-            onChange={handleChange}
-            value={props.bio}
+                type='file'
+                accept='image/*'
+                name='image'
+                onChange={handleChange}
+                value={props.image}
             />
             <div>
-                <p className='edit-btn-aft' onClick={handleSubmit}><Link to='/stylist-dash'>Save</Link></p>
+                <p className='edit-btn-aft' onClick={handleSubmit}><Link to='/stylist-dash'>Upload</Link></p>
             </div>
-        </EditForm>
+        </ImageForm>
     
     </div>
     )
@@ -70,9 +67,16 @@ return (
 
 
 
-export default EditBio;
+export default AddImage;
 
-const EditForm = styled.form`
+const ImageForm = styled.form`
+    box-shadow: .5px 1px 3px #000;
+    margin: 100px auto;
+    width: 40%;
+    h3{
+        padding: 10px;
+        font-size: 1.5rem
+    }
     input{
         height: 250px;
         width: 400px;

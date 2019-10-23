@@ -1,15 +1,16 @@
 import React, {useState, useEffect} from "react";
 import styled from 'styled-components';
 import {useDataContext} from './contexts/DataContext';
-// import {axiosWithAuth} from '../utilis/axiosWithAuth';
+import {axiosWithAuth} from './utilis/axiosWithAuth';
 
-const ReviewForm = () => {
+const ReviewForm = (props) => {
     const {data, dispatchData} = useDataContext();
 
     const [newReview, setNewReview] = useState({
         id: Date.now(),
         text: '',
-        // client: data.client,
+        image: '',
+        customer: data.customer,
     })
     
     useEffect(()=> setNewReview({
@@ -17,41 +18,50 @@ const ReviewForm = () => {
     }, []))
 
     const handleChange = e => {
+        e.preventDefault();
         setNewReview({
             ...newReview,
                 [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        dispatchData({
-            type:'ADD_REVIEW',
-            payload: newReview
-        })
-    }
-
-    // addReview = this.state.newReview => {
-    //     axiosWithAuth()
-    //     .post('/reviews', state.newReview)
-    //     .then(res => {
-    //         localStorage.setItem('token', res.data.payload)
+    // const handleSubmit = e => {
+    //     e.preventDefault();
+    //     dispatchData({
+    //         type:'ADD_REVIEW',
+    //         payload: newReview
     //     })
-    //     .catch(err=> console.log(err.message))
     // }
+
+    const handleSubmit = newReview => {
+        axiosWithAuth()
+        .post('/reviews', newReview)
+        .then(res => {
+            localStorage.setItem('token', res.data.payload)
+        })
+        .catch(err=> console.log(err.message))
+    }
 
     return(
         <div>
             <p>Add Review</p>
             <AddReviewBox onSubmit={handleSubmit}>
                 <input 
-                type='text'
-                name='review'
-                // value={review}
-                placeholder='Add Comment'
-                onChange={handleChange}/>
+                    type='text'
+                    name='review'
+                    placeholder='Add Comment'
+                    onChange={handleChange}
+                />
 
-                <button type='submit'>+</button>
+                <input 
+                    type='file'
+                    accept='image/*'
+                    name='image'
+                    onChange={handleChange}
+                    value={props.image}
+                />
+
+                {/* <button type='submit'>+Add</button> */}
             </AddReviewBox>
         </div>
     )
@@ -61,7 +71,8 @@ const ReviewForm = () => {
 export default ReviewForm;
 
 const AddReviewBox = styled.form`
-    border: 1px solid black,
+    display: flex;
+    flex-direction: column;
     height: 100px,
     width: 300px,
     background: black,

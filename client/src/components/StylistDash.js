@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Redirect, NavLink} from 'react-router-dom';
 import styled from 'styled-components';
 import {useDataContext} from './contexts/DataContext';
+import {useUserContext} from './contexts/UserContext';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
 import Reviews from './Reviews';
 
@@ -14,16 +15,50 @@ const initialBio = {
     address: ''
 }
 
+const savedStylist = {
+    id: Date.now(),
+    name: '',
+    address: '',
+    imageUrl: '',
+    salon: ''
+}
+
 const StylistDash = props => {
     const {data, dispatchData} = useDataContext();
-    
+    const { user, dispatch } = useUserContext();
+    const {savedStylist, setSavedStylist} = useState();
 
     useEffect(()=> {
         const stylistName = props.match.params.id;
         dispatchData({type: 'SET_STYLIST', payload: stylistName})
     }, [])
 
+    const handleAddStylist = e => {
+        setSavedStylist({
+            savedStylist: {
+            ...savedStylist,
+            [e.target.name]: e.target.value
+            }
+        })
+    }
+
+    const addStylist = savedStylist => {
+        axiosWithAuth()
+        .post(`/api/customer-dash/${props.customer.id}`, savedStylist)
+        .then(res=> {
+            localStorage.setItem('token', res.data.payload)
+        })
+        .catch(err=> console.log(err))
+    }
     
+    const addImage = newImage => {
+        axiosWithAuth()
+        .post(`/api/stylist-dash/${props.stylist.id}`, newImage)
+        .then(res=> {
+            localStorage.setItem('token', res.data.payload)
+        })
+        .catch(err=> console.log(err))
+    }
 
     // useEffect(()=> {
     //     const bioToEdit = props.bio;
@@ -63,25 +98,44 @@ const StylistDash = props => {
                         <h3>Name: {data.name}</h3>
                         <p>Address: Lorem ipsum {data.address}</p>
                         <p>Bio: Lorem ipsum {data.bio}</p>
-                        <NavLink to='edit-bio' className='edit-btn'>Edit</NavLink>
-                        <SaveButton>Save Stylist</SaveButton>
+
+                        {user.isStylist && (
+                            <NavLink to='edit-bio' className='edit-btn'>Edit</NavLink>
+                        )}
+                        
+                        {user.isCustomer &&(
+                            <SaveButton onClick={addStylist}>Save Stylist</SaveButton>
+                        )}
+                        
                     </div>
 
                 </InfoBox>                
             </section>
-            <Reviews/>
+            {/* <Reviews/> */}
 
             <section className = 'gallery'>
                 <Gallery>
-                    <h3>Gallery</h3>    
+                    <div> 
+                        <NavLink to='add-image'>
+                            <SaveButton >+Add Image</SaveButton>
+                        </NavLink>
+                        {/* {user.isStylist &&(
+                            <SaveButton onClick={addImage}>Add Image</SaveButton>
+                        )} */}  
+                    </div>  
                     <div>
-                    <img src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
-                    <img src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
+                    <GalleryImg>
+                        <img src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
+                    </GalleryImg>
+                    
                     {/* {data.stylist.map(el=> (
-                        <img src={`${el.img.src}`}/>
+                        <GalleryImg>
+                            <img src={`${el.img.src}`}/>
+                        </GalleryImg>
                     ))} */}
                     </div>
                 </Gallery>
+
             </section>
 
         </div>
@@ -103,7 +157,7 @@ const SaveButton = styled.button`
 `;
 
 const InfoBox = styled.div`
-    border: 1px solid gray
+    border-bottom: 1px solid #80808075;
     text-align: left;
     pading: 20px;
     width: 85%;
@@ -130,20 +184,29 @@ const InfoBox = styled.div`
 const Gallery = styled.div`
     width: 85%;
     margin: 0 auto;
-    pading: 20px
-    border: 1px solid gray;
+    pading: 100px
     h3{ align-text: center}
     div{
         display: flex;
         flex-wrap: wrap: 
     }
+    div:nth-child(1){
+        justify-content: flex-end;
+        margin: 10px;
+    }
     img{
         margin: 5px;
         height: 300px;
         object-fit: cover;
-        box-shadow: 1px 3px 3px black;
-        :hover{
-            transform: scale(1.025)
-        }
+        box-shadow: .5px 1px 3px black;
     }
+`;
+
+const GalleryImg = styled.div`
+img{
+    margin: 5px;
+    height: 300px;
+    object-fit: cover;
+    box-shadow: .5px 1px 3px black;
+}
 `;

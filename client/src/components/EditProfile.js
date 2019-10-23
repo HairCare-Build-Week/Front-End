@@ -57,6 +57,7 @@ return (
         <EditForm onSubmit={handleSubmit}>
             <input 
             name='name'
+            type='text'
             onChange={handleChange}
             value={props.name}
             placeholder='Name'
@@ -64,6 +65,7 @@ return (
 
             <input 
             name='address'
+            type='text'
             onChange={handleChange}
             value={props.address}
             placeholder='Address'
@@ -71,6 +73,7 @@ return (
 
             <input 
             name='email'
+            type='text'
             onChange={handleChange}
             value={props.email}
             placeholder='Email'
