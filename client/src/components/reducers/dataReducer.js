@@ -39,10 +39,10 @@ export const dataReducer = (state = initialState, action) => {
                 error: action.payload
             }
 
-        case 'IMPORT_CLIENT_DATA':
+        case 'IMPORT_CUSTOMER_DATA':
             return {
                 ...state,
-                clientData: action.payload,
+                customerData: action.payload,
                 hasData: true,
             }
         
