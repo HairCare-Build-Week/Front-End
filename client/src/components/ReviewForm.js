@@ -47,6 +47,7 @@ const ReviewForm = () => {
                 <input 
                 type='text'
                 name='review'
+                type='text'
                 // value={review}
                 placeholder='Add Comment'
                 onChange={handleChange}/>

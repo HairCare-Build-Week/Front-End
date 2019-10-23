@@ -15,14 +15,20 @@ const initialBio = {
 }
 
 const CustomerDash = props => {
+    const { data, dispatchData } = useDataContext();
 
-    const handleDelete = () => {
-        axiosWithAuth()
-        .delete(`/${props.stylist.id}`).then(res=> {
-          this.props.updateStylist(res.data);
-          this.props.history.push('/customer-dash');
-        }) .catch(err=> console.log('Not deleted:', err.response))
-      };
+
+    // const handleDelete = (id) => {
+    //     axiosWithAuth()
+    //     .delete(`/api/${stylist.id}`).then(res=> {
+    //       this.props.updateStylist(res.data);
+    //       this.props.history.push('/customer-dash');
+    //     }) .catch(err=> console.log('Not deleted:', err.response))
+    //   };
+
+    const handleDelete = (id) => {
+        dispatchData({type: 'DELETE_SAVED_STYLIST', payload: id})
+    }
 
     return (
         <div>
@@ -47,8 +53,7 @@ const CustomerDash = props => {
             <SavedCard>
                 <h4 onClick={handleDelete}>X</h4>
                 <NavLink 
-                to={`/stylist-dash`}
-                // key={props.stylist.id}
+                to={`stylist-dash`}
                 >
                     <img alt='saved stylists' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
                     <p>Stylist Name</p>
@@ -69,7 +74,7 @@ const CustomerDash = props => {
 export default CustomerDash;
 
 const InfoBox = styled.div`
-    border: 1px solid gray
+    border-bottom: 1px solid #80808075;
     text-align: left;
     pading: 20px;
     width: 85%;
@@ -103,7 +108,6 @@ const InfoBox = styled.div`
 
 const Saved = styled.div`
     width: 85%;
-    border: 1px solid gray;
     padding: 10px;
     margin: 0 auto;
     div{

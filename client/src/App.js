@@ -22,6 +22,7 @@ import CustomerDash from './components/CustomerDash';
 import PrivateRoute from './components/PrivateRoute';
 import EditBio from './components/EditBio';
 import EditProfile from './components/EditProfile';
+import AddImage from './components/AddImage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Switch>
           <Route exact path='/' render={()=> <Redirect to='login'/>}/>
           <Route path='/search' component={SearchPage}/>
+          <Route path='/add-image' component={AddImage} />
           <PrivateRoute path='/review' component={Reviews} />
           <Route path="/signup" component={SignUp}/>
           <Route path="/login" component={Login}/>

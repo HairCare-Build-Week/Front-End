@@ -35,6 +35,8 @@ function Nav(props) {
           <NavLink to='/search' >Search</NavLink>
           <NavLink to='/customer-dash'>Customer</NavLink>
           <NavLink to='/stylist-dash'>Stylist</NavLink> 
+          <NavLink to='/login'>Login</NavLink>
+
           
           {user.isLoggedIn && (
           <LogOutBtn

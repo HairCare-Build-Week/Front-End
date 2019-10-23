@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import ReviewForm from './ReviewForm';
+import {useUserContext} from './contexts/UserContext';
+
 
 const Reviews = props => {
+    const { user, dispatch } = useUserContext();
+
     return (
         <ReviewList>
             <h1>Reviews</h1>
-            {/* <ReviewForm/> */}
+            {user.isCustomer && (
+                <ReviewForm/>
+                )}
             <ul>
                 <li>Review:</li>
                 <li>Review:</li>

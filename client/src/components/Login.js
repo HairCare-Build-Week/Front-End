@@ -33,40 +33,40 @@ export default function Login (props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        if( 
-            axiosWithAuth().find(
-            obj=>
-                obj.username === credentials.username &&
-                obj.password === credentials.password
-            )
-        ){
-            localStorage.setItem('token', 'customer' + credentials.username);
-            localStorage.setItem('usertype', 'customer');
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                usertype: 'customer',
-                username: credentials.username,
-            });
-            dispatch({type: 'LOGIN_CUSTOMER'});
-            props.history.push(`/customer-dash/${props.customer.id}`);
-        } else if (
-            axiosWithAuth().find(
-            obj =>
-                obj.username === credentials.username &&
-                obj.password === credentials.password,
-            )
-        ){
-            localStorage.setItem('token', 'stylist' + credentials.username);
-            localStorage.setItem('usertype', 'stylist');
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                usertype: 'stylist',
-                username: credentials.username,
-            });
-            dispatch({type: 'LOGIN_STYLIST'});
-            props.history.push(`/stylist-dash/${props.stylist.id}`);
-        } else {
-            dispatch({type: 'LOGIN_FAILURE'})
+        // if( 
+        //     axiosWithAuth().find(
+        //     obj=>
+        //         obj.username === credentials.username &&
+        //         obj.password === credentials.password
+        //     )
+        // ){
+        //     localStorage.setItem('token', 'customer' + credentials.username);
+        //     localStorage.setItem('usertype', 'customer');
+        //     dispatch({
+        //         type: 'LOGIN_SUCCESS',
+        //         usertype: 'customer',
+        //         username: credentials.username,
+        //     });
+        //     dispatch({type: 'LOGIN_CUSTOMER'});
+        //     props.history.push(`/customer-dash/${props.customer.id}`);
+        // } else if (
+        //     axiosWithAuth().find(
+        //     obj =>
+        //         obj.username === credentials.username &&
+        //         obj.password === credentials.password,
+        //     )
+        // ){
+        //     localStorage.setItem('token', 'stylist' + credentials.username);
+        //     localStorage.setItem('usertype', 'stylist');
+        //     dispatch({
+        //         type: 'LOGIN_SUCCESS',
+        //         usertype: 'stylist',
+        //         username: credentials.username,
+        //     });
+        //     dispatch({type: 'LOGIN_STYLIST'});
+        //     props.history.push(`/stylist-dash/${props.stylist.id}`);
+        // } else {
+        //     dispatch({type: 'LOGIN_FAILURE'})
     }
 
     const login = e => {
@@ -97,6 +97,7 @@ export default function Login (props) {
         return (
             <div className='form' >
                 <LoginForm onSubmit={handleSubmit}>
+                    <h3>Welcome Back</h3>
                     <input type='text' name='username' value={credentials.username} 
                     placeholder="username" onChange={handleChange}/>
 
@@ -108,7 +109,7 @@ export default function Login (props) {
                 </LoginForm>
             </div>
         );
-}};
+};
 
 
 

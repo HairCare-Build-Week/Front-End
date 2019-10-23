@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
+import Form, {column} from "react-bootstrap/Form";
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { useUserContext } from './contexts/UserContext';
@@ -13,13 +13,13 @@ export default function SignUp() {
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
-    usertype: 'customer' || 'stylist'
+    usertype: ''
   });
 
   // const signup = e => {
   //   e.preventDefault();
   //   axiosWithAuth()
-  //   .post('/api/signup', credentials)
+  //   .post('/signup', credentials)
   //   .then(res=> {
   //     localStorage.setItem('token', res.data.payload)
   //   })
@@ -34,15 +34,14 @@ export default function SignUp() {
 
   return (
     <div>
-      <h1>Sign Up</h1>
       <SignupForm onSubmit={handleSubmit}>
-        <Form.Group controlId="formGroupEmail">
-          <Form.Label>Username</Form.Label>
+      <h1>Sign Up</h1>
+
+        <Form.Group controlId="formGroupEmail" className='input-grp'>
           <Form.Control type="text" placeholder="Username" />
         </Form.Group>
 
-        <Form.Group controlId="formGroupEmail">
-          <Form.Label>Email</Form.Label>
+        <Form.Group controlId="formGroupEmail" className='input-grp'>
           <Form.Control 
             type="email" 
             placeholder="Enter email" 
@@ -50,8 +49,7 @@ export default function SignUp() {
           />
         </Form.Group>
 
-        <Form.Group controlId="formGroupPassword">
-          <Form.Label>Password</Form.Label>
+        <Form.Group controlId="formGroupPassword" className='input-grp'>
           <Form.Control 
             type="password" 
             placeholder="Password" 
@@ -59,28 +57,27 @@ export default function SignUp() {
           />
         </Form.Group>
 
-        <Form.Group /*as={Col}*/ controlId="formGridCity">
-          <Form.Label>City</Form.Label>
+        <Form.Group /*as={Col}*/ controlId="formGridCity" className='input-grp'>
           <Form.Control 
             placeholder="City" 
             type="text" 
             onChange={handleChange}
           />
         </Form.Group>
-
-        <Form.Group controlId="formGroupUsertype">
-          <Form.Label>Choose One</Form.Label>
+        
+      <p>I am a Stylist</p>
+        <Form.Group controlId="formGroupUsertype" className='select-grp'>
           <Form.Check 
-            type="type" 
-            id="usertype" 
-            label='Stylist'
+            type='checkbox'
+            value='stylist'
             onChange={handleChange}
-          />
+          />         
         </Form.Group>
+        
+        <button type="submit">Submit</button>
 
       </SignupForm>
 
-      <button type="submit">Submit</button>
     </div>
   );
 }
@@ -89,9 +86,11 @@ export default function SignUp() {
 const SignupForm = styled.form`
     display:flex;
     margin: 100px auto;
+    padding: 10px;
     flex-direction: column;
     box-shadow: 1px 2px 4px #000;
     width: 350px;
+    justify-content: center;
     input{
         width: 300px;
         margin: 20px;
@@ -100,12 +99,17 @@ const SignupForm = styled.form`
         display: flex;
         justify-content: center
     }
+    p{
+      margin: 0;
+      padding: 0;
+    }
+    
     button{
         color: #000;
         font-size: 1rem;
         border: none;
+        padding: 5px 7px;
         background: none;
-    a{
         text-decoration: none;
         color: black;
         :hover{transform: scale(1.025); color: #80808095; cursor: pointer}

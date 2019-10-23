@@ -6,7 +6,8 @@ export const initialState ={
     stylist: '',
     clientData: [],
     reviews: [],
-    photos: [],
+    imageUrl: '',
+    images: [],
     cities: [],
     city: '',
     isGetting: false,
@@ -69,6 +70,11 @@ export const dataReducer = (state = initialState, action) => {
                 ...state,
                 stylist: action.payload
             }
+        case 'DELETE_SAVED_STYLIST':
+            return {
+                ...state,
+                savedStylist: state.savedStylist.filter(el=> el !== action.payload)
+            }
         case 'ADD_REVIEW':
             return{
                 ...state,
@@ -81,7 +87,7 @@ export const dataReducer = (state = initialState, action) => {
                 stylistData: state.stylistData.filter(obj => obj.review !== action.payload),
             };
 
-        case 'ADD_PHOTO':
+        case 'ADD_IMAGE':
             return{
                 ...state,
                 photos: [...state.photos, action.payload]
