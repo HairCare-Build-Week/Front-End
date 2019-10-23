@@ -145,9 +145,8 @@ const LoginForm = styled.form`
         font-size: 1rem;
         border: none;
         background: none;
-    a{
         text-decoration: none;
         color: black;
         :hover{transform: scale(1.025); color: #80808095; cursor: pointer}
     }
-`
+`;

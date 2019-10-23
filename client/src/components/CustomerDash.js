@@ -7,10 +7,10 @@ import {axiosWithAuth} from './utilis/axiosWithAuth';
 //add edit options
 const initialBio = {
     name: '',
-    salon: '',
+    savedStylists: [],
     imageUrl: '',
-    bio: '',
     address: '',
+    email: '',
     id: '',
 }
 
