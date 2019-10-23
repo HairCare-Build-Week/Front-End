@@ -57,7 +57,9 @@ return (
                 value={props.image}
             />
             <div>
-                <p className='edit-btn-aft' onClick={handleSubmit}><Link to='/stylist-dash'>Upload</Link></p>
+                <p className='edit-btn-aft' onClick={handleSubmit}>
+                    <Link to={`${props.id}`}>Upload</Link>
+                </p>
             </div>
         </ImageForm>
     

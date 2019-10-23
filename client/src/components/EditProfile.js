@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 const initialBio = {
     name: '',
@@ -9,7 +9,6 @@ const initialBio = {
     address: '',
     email: ''
 }
-
 
 const EditBio = props => {
     const [editing, setEditing] = useState(false);
@@ -52,35 +51,39 @@ return (
         <h3>Edit Profile</h3>
         <ProfileImg>
             <img src={props.imageUrl}/>
+            
         </ProfileImg>
+        <NavLink to='add-image'><p>change image</p></NavLink>
    
         <EditForm onSubmit={handleSubmit}>
             <input 
-            name='name'
-            type='text'
-            onChange={handleChange}
-            value={props.name}
-            placeholder='Name'
+                name='name'
+                type='text'
+                onChange={handleChange}
+                value={props.name}
+                placeholder='Name'
             />
 
             <input 
-            name='address'
-            type='text'
-            onChange={handleChange}
-            value={props.address}
-            placeholder='Address'
+                name='email'
+                type='text'
+                onChange={handleChange}
+                value={props.email}
+                placeholder='Email'
             />
 
             <input 
-            name='email'
-            type='text'
-            onChange={handleChange}
-            value={props.email}
-            placeholder='Email'
+                name='address'
+                type='text'
+                onChange={handleChange}
+                value={props.address}
+                placeholder='Address'
             />
 
             <div>
-                <p className='edit-btn-aft' onClick={handleSubmit}><Link to='/customer-dash'>Save</Link></p>
+                <p className='edit-btn-aft' onClick={handleSubmit}>
+                    <Link to='/customer-dash'>Save</Link>
+                </p>
             </div>
         </EditForm>
     
@@ -101,15 +104,15 @@ const ProfileImg = styled.div`
 `;
 
 const EditForm = styled.form`
-    // margin: 0 auto;
+    margin: 10px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    box-shadow: .5px 1px 2px #000;
+    width: 30%;
     input{
-        width: 400px;
         margin: 20px;
         justify-content: center;
-
     }
     div{
         display: flex;

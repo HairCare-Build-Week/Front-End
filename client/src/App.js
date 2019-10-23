@@ -39,8 +39,8 @@ function App() {
           <PrivateRoute path='/review' component={Reviews} />
           <Route path="/signup" component={SignUp}/>
           <Route path="/login" component={Login}/>
-          <PrivateRoute path="/edit-bio" component={EditBio}/>
-          <PrivateRoute path="/edit-profile" component={EditProfile}/>
+          <Route path="/edit-bio" component={EditBio}/>
+          <Route path="/edit-profile" component={EditProfile}/>
           <Route path='/customer-dash' component={CustomerDash}/>
           <Route path='/stylist-dash' component={StylistDash}/>
         </Switch>
