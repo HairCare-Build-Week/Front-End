@@ -51,7 +51,7 @@ return (
         <h3>Select Image to Upload</h3>
             <input 
                 type='file'
-                accept='image/8'
+                accept='image/*'
                 name='image'
                 onChange={handleChange}
                 value={props.image}

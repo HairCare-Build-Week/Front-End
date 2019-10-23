@@ -111,7 +111,7 @@ const StylistDash = props => {
 
                 </InfoBox>                
             </section>
-            <Reviews/>
+            {/* <Reviews/> */}
 
             <section className = 'gallery'>
                 <Gallery>
@@ -124,8 +124,10 @@ const StylistDash = props => {
                         )} */}  
                     </div>  
                     <div>
-                    <img src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
-                    <img src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
+                    <GalleryImg>
+                        <img src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
+                    </GalleryImg>
+                    
                     {/* {data.stylist.map(el=> (
                         <GalleryImg>
                             <img src={`${el.img.src}`}/>
@@ -183,7 +185,6 @@ const Gallery = styled.div`
     width: 85%;
     margin: 0 auto;
     pading: 100px
-    border: 1px solid gray;
     h3{ align-text: center}
     div{
         display: flex;

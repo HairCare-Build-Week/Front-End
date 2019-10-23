@@ -95,7 +95,8 @@ export default function Login (props) {
         //     return <ProtectedRoute path=`/${usertype}` component={`${usertype}}/>
         // } 
         return (
-            <div className='form' >
+            <LoginPage>
+                <img alt='girls hair getting trimmed' src='https://github.com/HairCare-Build-Week/Marketing-Page/blob/sierra-curtis/images/hair-hair-salon-hair-stylist-2799609.jpg?raw=true'/>
                 <LoginForm onSubmit={handleSubmit}>
                     <h3>Welcome Back</h3>
                     <input type='text' name='username' value={credentials.username} 
@@ -107,10 +108,21 @@ export default function Login (props) {
                     <NavLink to='/signup'><button>Signup</button></NavLink>
 
                 </LoginForm>
-            </div>
+            </LoginPage>
         );
 };
 
+const LoginPage = styled.div`
+    img{
+        height: 100vh;
+        width: 100vw;
+        object-fit: cover
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+    };
+`;
 
 
 const LoginForm = styled.form`
@@ -118,6 +130,7 @@ const LoginForm = styled.form`
     margin: 100px auto;
     flex-direction: column;
     box-shadow: 1px 2px 4px #000;
+    background: white;
     width: 350px;
     input{
         width: 300px;

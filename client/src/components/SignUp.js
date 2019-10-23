@@ -33,7 +33,8 @@ export default function SignUp() {
     };
 
   return (
-    <div>
+    <SignupPage>
+      <img alt='girls hair getting trimmed' src='https://github.com/HairCare-Build-Week/Marketing-Page/blob/sierra-curtis/images/hair-hair-salon-hair-stylist-2799609.jpg?raw=true'/>
       <SignupForm onSubmit={handleSubmit}>
       <h1>Sign Up</h1>
 
@@ -78,10 +79,21 @@ export default function SignUp() {
 
       </SignupForm>
 
-    </div>
+    </SignupPage>
   );
 }
 
+const SignupPage = styled.div`
+    img{
+        height: 100vh;
+        width: 100vw;
+        object-fit: cover
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+    };
+`;
 
 const SignupForm = styled.form`
     display:flex;
@@ -89,6 +101,7 @@ const SignupForm = styled.form`
     padding: 10px;
     flex-direction: column;
     box-shadow: 1px 2px 4px #000;
+    background: white;
     width: 350px;
     justify-content: center;
     input{

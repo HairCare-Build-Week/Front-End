@@ -57,7 +57,7 @@ export default withRouter(Nav);
 
 
 const NavBar = styled.nav`
-    background: #9b3080; 
+    background: #fff; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,7 +65,7 @@ const NavBar = styled.nav`
     justify-content: space-evenly;
     a{
         text-decoration: none;
-        color: white;
+        color: #000;
     }
     img{
         height: 100px;
