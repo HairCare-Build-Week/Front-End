@@ -6,16 +6,17 @@ import {Link} from 'react-router-dom';
 
 
 function SearchCard(props)  {
+    const { profile_img, name, salon, city, bio } = props.stylist;
 
     return (
         <Card>
-            <Link to={`/${props.id}`}>
+            <Link to={`/stylist-dash`}>
+                <img src={profile_img} alt='stylist profile'/>
                 <div>
-                    <img src={props.img} alt='stylist profile'/>
-                </div>
-                <div>
-                    <h3>stylist{props.name}</h3>
-                    <p>salon name: {props.salon}</p>
+                    <h3>{salon}</h3>
+                    <h4>{name}</h4>
+                    <p>Address: {city}</p>
+                    <p>{bio}</p>
                 </div>
             </Link>
         </Card>
@@ -25,17 +26,24 @@ function SearchCard(props)  {
 
 const Card = styled.div`
     height: 300px;
-    width: 80%;
-    padding: 5px;
-    border: 1.5px solid pink;
+    width: 100%;
+    margin-bottom: 10px;
+    box-shadow: .5px 2px 3px #000;
     background: white;
+    text-align: left;
     display: flex;
+    flex-direction: row;
+    h3{border-bottom: 1px solid #80808095; padding-bottom: 5px;}
     img{
         height: 300px;
         width: 300px;
         object-fit: cover;
+        display: flex;
+        margin-right: 20px;
     }
     a{
+        display: flex;
+        align-items: center;
         text-decoration: none;
         color: black
     }

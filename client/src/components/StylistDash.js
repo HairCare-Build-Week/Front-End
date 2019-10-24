@@ -6,34 +6,43 @@ import {useUserContext} from './contexts/UserContext';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
 import Reviews from './Reviews';
 
-const initialBio = {
-    name: '',
-    salon: '',
-    imageUrl: '',
-    bio: '',
-    address: ''
-}
 
-const savedStylist = {
-    id: Date.now(),
-    name: '',
-    address: '',
-    imageUrl: '',
-    salon: ''
-}
-
-export default function StylistDash(props) {
+export default function StylistDash() {
     const {data, dispatchData} = useDataContext();
     const {user, dispatch } = useUserContext();
     const {savedStylist, setSavedStylist} = useState();
 
-    useEffect(()=> {
-        const stylistId = Number(props.match.params.id);
-        const stylistData = data.stylists.find(el => el.id === stylistId);
-        dispatchData({type: 'SET_STYLIST', payload: stylistData})
-    }, [])
+    const stylist = 
+    {
+      id: 1,
+      username: 'Stella',
+      password: 'Stella',
+      name: 'Stella',
+      salon: 'Stella\'s Salon',
+      email: 'stella@gmail.com',
+      city: 'Dallas',
+      isStylist: true,
+      bio: 'Hi, I am Stella. I am a hairstylist.',
+      profile_img: 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+      images: [
+        {
+          imageUrl: 'https://images.unsplash.com/photo-1549236177-f9b0031756eb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+        },
+        {
+          imageUrl: 'https://images.unsplash.com/photo-1554519515-242161756769?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+        },
+        { imageUrl: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+        }
+      ]
+    }
 
-    if(!data.stylist){ return <Redirect to='/signup'></Redirect> }
+    // useEffect(()=> {
+    //     const stylistId = Number(props.match.params.id);
+    //     const stylistData = data.stylists.find(el => el.id === stylistId);
+    //     dispatchData({type: 'SET_STYLIST', payload: stylistData})
+    // }, [])
+
+    // if(!data.stylist){ return <Redirect to='/signup'></Redirect> }
 
     const handleAddStylist = e => {
         setSavedStylist({
@@ -46,7 +55,7 @@ export default function StylistDash(props) {
 
     const addStylist = savedStylist => {
         axiosWithAuth()
-        .post(`/api/customer-dash/${props.customer.id}`, savedStylist)
+        .post(`/api/customer-dash`, savedStylist)
         .then(res=> {
             localStorage.setItem('token', res.data.payload)
         })
@@ -55,7 +64,7 @@ export default function StylistDash(props) {
     
     const addImage = newImage => {
         axiosWithAuth()
-        .post(`/api/stylist-dash/${props.stylist.id}`, newImage)
+        .post(`/api/stylist-dash/${stylist.id}`, newImage)
         .then(res=> {
             localStorage.setItem('token', res.data.payload)
         })
@@ -66,49 +75,28 @@ export default function StylistDash(props) {
     //     const bioToEdit = props.bio;
     //     if (bioToEdit) setBio(bioToEdit);
     // }, [props.bio, props.match.params.id]);
-
-    // const handleChange = ev => {
-    //     ev.persist();
-    //     let value = ev.target.value;
-
-    //     setBio({
-    //         ...bio,
-    //         [ev.target.name]: value
-    //     })
-    // }
-
-    // const editBio = bioToEdit  => {
-    //     setEditing(true);
-    //     setBio(bioToEdit)
-    // }
     
-    // if (!data.hasData){
-    //     return <Redirect to='/login'/>
-    // };
+    if (!data.hasData){
+        return <Redirect to='/login'/>
+    };
 
     return (
         <div>
             <h1>Stylist Profile</h1>
-            
+            <SaveButton onClick={addStylist}>Save Stylist</SaveButton>
+
             <section className = 'about-me'>
                 <InfoBox>
                     <div>
-                        <img src={data.stylist.imageUrl[0]} alt='profile of stylist, shop'/>
+                        <img src={`${stylist.profile_img}`} alt='profile of stylist, shop'/>
                     </div>
                     <div className='profile-text'>
-                        <h3>Salon Name:{data.stylist.salon}</h3>
-                        <h3>Name: {data.stylist.name}</h3>
-                        <p>Address: Lorem ipsum {data.stylist.city}</p>
-                        <p>Bio: Lorem ipsum {data.stylist.bio}</p>
+                        <h3>{stylist.salon}</h3>
+                        <h3>{stylist.name}</h3>
+                        <p>{stylist.city}</p>
+                        <p>{stylist.bio}</p>
 
-                        {user.isStylist && (
-                            <NavLink to='edit-bio' className='edit-btn'>Edit</NavLink>
-                        )}
-                        
-                        {user.isCustomer &&(
-                            <SaveButton onClick={addStylist}>Save Stylist</SaveButton>
-                        )}
-                        
+                        <NavLink to='edit-bio' className='edit-btn'>Edit</NavLink>
                     </div>
 
                 </InfoBox>                
@@ -118,23 +106,16 @@ export default function StylistDash(props) {
             <section className = 'gallery'>
                 <Gallery>
                     <div> 
-                        {/* <NavLink to='add-image'>
-                            <SaveButton >+Add Image</SaveButton>
-                        </NavLink> */}
-                        {user.isStylist &&(
+                        {stylist.isStylist &&(
                             <SaveButton onClick={addImage}>Add Image</SaveButton>
                         )} 
                     </div>  
-                    <div>
-                    <GalleryImg>
-                        <img src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
-                    </GalleryImg>
-                    
-                    {/* {data.stylist.map(el=> (
+                    <div>                    
+                    {stylist.images.map(image=> (
                         <GalleryImg>
-                            <img src={`${el.img.src}`}/>
+                            <img src={`${image.imageUrl}`}/>
                         </GalleryImg>
-                    ))} */}
+                    ))}
                     </div>
                 </Gallery>
 
@@ -160,20 +141,21 @@ const SaveButton = styled.button`
 const InfoBox = styled.div`
     border-bottom: 1px solid #80808075;
     text-align: left;
-    pading: 20px;
+    padding: 20px;
     width: 85%;
-    height: 400px;
+    height: 500px;
     margin: 20px auto;
     display: flex;
     img{
         height: 100%;
         object-fit: cover;
+        margin-right: 20px;
+
     }
     div:nth-child(1){
-        width: 40%;
     }
     .profile-text{
-        margin-top: 20px;
+        align-items: center;
     }
     p{ font-size: 1.2rem}
     .edit-btn{

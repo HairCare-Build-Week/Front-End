@@ -2,19 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Redirect, NavLink} from 'react-router-dom';
 import styled from 'styled-components';
 import {useDataContext} from './contexts/DataContext';
-import {axiosWithAuth} from './utilis/axiosWithAuth';
+// import {axiosWithAuth} from './utilis/axiosWithAuth';
+import SavedCard from './SavedStylists';
 
-
-export default function CustomerDash(props) {
+export default function CustomerDash() {
     const { data, dispatchData } = useDataContext();
 
-    useEffect(()=> {
-        const customerId = Number(props.match.params.id);
-        const customerData = data.customer.find(el => el.id === customerId);
-        dispatchData({type: 'SET_CUSTOMER', payload: customerData})
-    }, [])
+    const customer = 
+        {
+          id: 1,
+          isCustomer: true,
+          password: 'Sierra',
+          username: 'Sierra',
+          name: 'Sierra',
+          email: 'sierra@gmail.com',
+          city: 'San Diego',
+          profile_img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
+          saved_stylists: [
+            {
+                id: 2,
+                name: 'Hector',
+                salon: 'Hector\'s Barber Shop',
+                city: 'San Diego',
+                profile_img: 'https://images.unsplash.com/photo-1541705897117-dc56b6637c9e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+              }
+          ],
+        }
 
-    if(!data.customer){ return <Redirect to='/signup'></Redirect> }
+    // useEffect(()=> {
+    //     const customerId = (props.match.params.id);
+    //     const customerData = data.customer.find(el => el.id === customerId);
+    //     dispatchData({type: 'SET_CUSTOMER', payload: customerData})
+    // }, [])
+
+    // if(!data.customer){ return <Redirect to='/signup'></Redirect> }
     
 
     const handleDelete = (id) => {
@@ -27,12 +48,11 @@ export default function CustomerDash(props) {
         <section className = 'about-me'>
             <InfoBox>
                 <div>
-                    <img alt='stylist profile' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
+                    <img alt='stylist profile' src={customer.profile_img}/>
                 </div>
                 <div className='profile-text'>
-                    <h3>Name:{data.customer.name}</h3>
-                    <p>City: {data.customer.city}</p>
-                    <p>Email: {data.customer.email}</p>
+                    <h3>{customer.name}</h3>
+                    <p>{customer.city}</p>
                     <NavLink to='edit-profile' className='edit-btn' >Edit</NavLink>
                 </div>
             </InfoBox>                
@@ -41,20 +61,10 @@ export default function CustomerDash(props) {
         <Saved>
             <h3>Your Saved Stylists</h3>
             <div>
-            <SavedCard>
-                <h4 onClick={handleDelete}>X</h4>
-                <NavLink 
-                to={`stylist-dash`}
-                >
-                    <img alt='saved stylists' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
-                    <p>Stylist Name</p>
-                </NavLink>
-            </SavedCard>
-            <SavedCard>
-                <h4 onClick={handleDelete}>X</h4>
-                <img alt='saved stylists' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
-                <p>Stylist Name</p>
-            </SavedCard>
+                {customer.saved_stylists.map(stylist=> (
+                <SavedCard key={stylist.id} stylist={stylist}/>
+
+                ))}
             </div>
         </Saved>
         </div>
@@ -65,7 +75,7 @@ export default function CustomerDash(props) {
 const InfoBox = styled.div`
     border-bottom: 1px solid #80808075;
     text-align: left;
-    pading: 20px;
+    padding: 20px;
     width: 85%;
     height: 400px;
     margin: 20px auto;
@@ -74,11 +84,10 @@ const InfoBox = styled.div`
     align-content: center;
 
     img{
-        height: 400px;
-        width: 400px;
+        height: 300px;
+        width: 300px;
         object-fit: cover;
         border-radius: 50%
-        border: 1px solid purple;
         
     }
     div:nth-child(1){
@@ -105,28 +114,7 @@ const Saved = styled.div`
     }    
 `;
 
-const SavedCard = styled.div`
-    width: 150px;
-    flex-direction: column;
-    margin: 5px;
-    p{ font-size: 1.25rem}
-    }
-    img{
-        height: 150px;
-        width: 150px;
-        object-fit: cover;
-    }
-    h4{
-        text-align: right;
-        font-size: 1.25rem;
-        :hover{color: #80808095}
-    }
-    a{
-        text-decoration: none;
-        color: black;
-    }
-    :hover{transform: scale(1.05); cursor: pointer}
-`;
+
 
 // const initialBio = {
 //     name: '',
