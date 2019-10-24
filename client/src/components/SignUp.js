@@ -4,33 +4,56 @@ import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { useUserContext } from './contexts/UserContext';
 import { useDataContext } from './contexts/DataContext';
-import { axiosWithAuth } from "./utilis/axiosWithAuth";
+// import { axiosWithAuth } from "./utilis/axiosWithAuth";
+import {testStylists, testCustomers} from '../testData';
 
-export default function SignUp() {
-  // const { user, dispatch } = useUserContext();
-  // const { data, dispatchData } = useDataContext();
+export default function SignUp(props) {
+  const { user, dispatch } = useUserContext();
+  const { dispatchData } = useDataContext();
 
-  const [credentials, setCredentials] = useState({
+  const [registrationInfo, setRegistrationInfo] = useState({
     username: '',
     password: '',
-    usertype: ''
+    city: '',
+    email: '',
+    isStylist: false,
+    id: Date.now(),
   });
 
-  // const signup = e => {
-  //   e.preventDefault();
-  //   axiosWithAuth()
-  //   .post('/signup', credentials)
-  //   .then(res=> {
-  //     localStorage.setItem('token', res.data.payload)
-  //   })
-  // }
 
   const handleChange = e =>
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  setRegistrationInfo({ ...registrationInfo, [e.target.name]: e.target.value });
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    const users = [...testCustomers, ...testStylists];
+    if (users.map(obj => obj.username).includes(registrationInfo.username)) {
+      dispatch({ type: 'REGISTRATION_FAILURE' });
+    } else {
+      localStorage.setItem('token', 'register' + registrationInfo.username);
+      localStorage.setItem('usertype' + registrationInfo.isStylist);
+      dispatch({
+        type: 'REGISTRATION_SUCCESS',
+        username: registrationInfo.username,
+        city: registrationInfo.city,
+      });
+      if(user === 'stylist'){
+        props.history.push(`/stylist-dash/${registrationInfo.id}`)
+      } else {
+        props.history.push(`/customer-dash/${registrationInfo.id}`)
+
+      }
+      }
     };
+
+    if (localStorage.getItem('token')) {
+      if (user.usertype === 'stylist') {
+        return <Redirect to='/stylist-dash' />;
+      } else {
+        return <Redirect to={`/customer-dash/${localStorage.getItem('customer')}`} />;
+      }
+    }
 
   return (
     <SignupPage>
@@ -39,13 +62,23 @@ export default function SignUp() {
       <h1>Sign Up</h1>
 
         <Form.Group controlId="formGroupEmail" className='input-grp'>
-          <Form.Control type="text" placeholder="Username" />
+          <Form.Control 
+          type="text" 
+          placeholder="Username"
+          id='username'
+          name='username'
+          placeholder='Username'
+          value={registrationInfo.username}
+          onChange={handleChange} />
         </Form.Group>
 
         <Form.Group controlId="formGroupEmail" className='input-grp'>
           <Form.Control 
-            type="email" 
-            placeholder="Enter email" 
+            type="text" 
+            placeholder="Email"
+            id='email'
+            name='email'
+            value={registrationInfo.email} 
             onChange={handleChange}
           />
         </Form.Group>
@@ -54,6 +87,9 @@ export default function SignUp() {
           <Form.Control 
             type="password" 
             placeholder="Password" 
+            id='password'
+            name='password'
+            value={registrationInfo.password}
             onChange={handleChange}
           />
         </Form.Group>
@@ -62,6 +98,9 @@ export default function SignUp() {
           <Form.Control 
             placeholder="City" 
             type="text" 
+            id='city'
+            name='city'
+            value={registrationInfo.city}
             onChange={handleChange}
           />
         </Form.Group>
@@ -70,10 +109,26 @@ export default function SignUp() {
         <Form.Group controlId="formGroupUsertype" className='select-grp'>
           <Form.Check 
             type='checkbox'
-            value='stylist'
+            value={registrationInfo.isStylist}
+            id='isStylist'
+            name='isStylist'
             onChange={handleChange}
           />         
         </Form.Group>
+      {registrationInfo.isStylist && (
+        <Form.Group controlId="formGroupSalon" className='input-grp'>
+          <Form.Control 
+            type="text" 
+            placeholder="Salon Name" 
+            id='salon'
+            name='salon'
+            value={registrationInfo.salon}
+            onChange={handleChange}
+          />
+        </Form.Group>
+      )}
+
+        {user.error && <p>{user.error}</p>}
         
         <button type="submit">Submit</button>
 

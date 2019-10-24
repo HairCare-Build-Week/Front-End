@@ -10,12 +10,13 @@ function SearchCard(props)  {
     return (
         <Card>
             <Link to={`/${props.id}`}>
-                {/* <img src={props.img} alt='stylist profile'/>
-             */}
-            <img src='..\images\logo.jpg' alt='logo purple girl'/>
-
-                <h3>{props.name}</h3>
-                <p>This is a hair stylist.</p>
+                <div>
+                    <img src={props.img} alt='stylist profile'/>
+                </div>
+                <div>
+                    <h3>stylist{props.name}</h3>
+                    <p>salon name: {props.salon}</p>
+                </div>
             </Link>
         </Card>
     )
@@ -24,13 +25,14 @@ function SearchCard(props)  {
 
 const Card = styled.div`
     height: 300px;
-    width: 300px;
+    width: 80%;
     padding: 5px;
     border: 1.5px solid pink;
     background: white;
+    display: flex;
     img{
-        height: 200px;
-        width: 250px;
+        height: 300px;
+        width: 300px;
         object-fit: cover;
     }
     a{
