@@ -4,27 +4,18 @@ import styled from 'styled-components';
 import {useDataContext} from './contexts/DataContext';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
 
-//add edit options
-const initialBio = {
-    name: '',
-    savedStylists: [],
-    imageUrl: '',
-    address: '',
-    email: '',
-    id: '',
-}
 
-const CustomerDash = props => {
+export default function CustomerDash(props) {
     const { data, dispatchData } = useDataContext();
 
+    useEffect(()=> {
+        const customerId = Number(props.match.params.id);
+        const customerData = data.customer.find(el => el.id === customerId);
+        dispatchData({type: 'SET_CUSTOMER', payload: customerData})
+    }, [])
 
-    // const handleDelete = (id) => {
-    //     axiosWithAuth()
-    //     .delete(`/api/${stylist.id}`).then(res=> {
-    //       this.props.updateStylist(res.data);
-    //       this.props.history.push('/customer-dash');
-    //     }) .catch(err=> console.log('Not deleted:', err.response))
-    //   };
+    if(!data.customer){ return <Redirect to='/signup'></Redirect> }
+    
 
     const handleDelete = (id) => {
         dispatchData({type: 'DELETE_SAVED_STYLIST', payload: id})
@@ -39,9 +30,9 @@ const CustomerDash = props => {
                     <img alt='stylist profile' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
                 </div>
                 <div className='profile-text'>
-                    <h3>Name:{props.name}</h3>
-                    <p>City: {props.address}</p>
-                    <p>Email: {props.email}</p>
+                    <h3>Name:{data.customer.name}</h3>
+                    <p>City: {data.customer.city}</p>
+                    <p>Email: {data.customer.email}</p>
                     <NavLink to='edit-profile' className='edit-btn' >Edit</NavLink>
                 </div>
             </InfoBox>                
@@ -70,8 +61,6 @@ const CustomerDash = props => {
 
     )
 }
-
-export default CustomerDash;
 
 const InfoBox = styled.div`
     border-bottom: 1px solid #80808075;
@@ -138,3 +127,19 @@ const SavedCard = styled.div`
     }
     :hover{transform: scale(1.05); cursor: pointer}
 `;
+
+// const initialBio = {
+//     name: '',
+//     savedStylists: [],
+//     imageUrl: '',
+//     address: '',
+//     email: '',
+//     id: '',
+// }
+// const handleDelete = (id) => {
+    //     axiosWithAuth()
+    //     .delete(`/api/${stylist.id}`).then(res=> {
+    //       this.props.updateStylist(res.data);
+    //       this.props.history.push('/customer-dash');
+    //     }) .catch(err=> console.log('Not deleted:', err.response))
+    //   };

@@ -12,6 +12,7 @@ function SearchPage(data) {
     // }, [searchTerm])
 
     const handleChange = e => {
+        e.preventDefault();
         setSearchTerm(e.target.value)
     };
 
@@ -22,7 +23,7 @@ function SearchPage(data) {
     return(
         <div>
             <SearchBar>
-                <h1>Now Viewing Stylists in {data.city}.</h1>
+                <h1>Now Viewing Stylists in {searchTerm}.</h1>
                 <form onSubmit={handleSubmit}>
                     <input
                     id='city'
@@ -52,6 +53,7 @@ const SearchContainer = styled.div`
     margin: 0 auto;  
     width: 80%;
     display: flex;
+    flex-direction: column;
     border: 1px solid #80808095;
 `;
 

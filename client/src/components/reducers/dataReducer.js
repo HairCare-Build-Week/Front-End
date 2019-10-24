@@ -70,6 +70,12 @@ export const dataReducer = (state = initialState, action) => {
                 ...state,
                 stylist: action.payload
             }
+
+        case 'SET_CUSTOMER':
+            return{
+                ...state,
+                customer: action.payload
+            }
         case 'DELETE_SAVED_STYLIST':
             return {
                 ...state,
