@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
 import ProtectedRoute from './PrivateRoute';
 import styled from 'styled-components';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import { useUserContext } from './contexts/UserContext';
 import { useDataContext } from './contexts/DataContext';
+import {testStylists, testCustomers} from '../testData';
 
 
 export default function Login (props) {
@@ -18,55 +19,53 @@ export default function Login (props) {
       });
 
       useEffect(() => {
-        dispatchData({ type: 'IMPORT_CUSTOMER_DATA', payload: props.customerData});
-        dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: props.stylistrData});
+        dispatchData({ type: 'IMPORT_CUSTOMER_DATA', payload: testCustomers});
+        dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: testStylists});
+        dispatchData({ type: 'SET_STYLIST', payload: testStylists});
+        dispatchData({ type: 'SET_CUSTOMER', payload: testCustomers});
       }, []);
 
     const handleChange = e =>{
-        setCredentials({
-            credentials: {
-                ...credentials,
-                [e.target.name]: e.target.value
-            }
-        });
+        setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = e => {
         e.preventDefault();
-        // if( 
-        //     axiosWithAuth().find(
-        //     obj=>
-        //         obj.username === credentials.username &&
-        //         obj.password === credentials.password
-        //     )
-        // ){
-        //     localStorage.setItem('token', 'customer' + credentials.username);
-        //     localStorage.setItem('usertype', 'customer');
-        //     dispatch({
-        //         type: 'LOGIN_SUCCESS',
-        //         usertype: 'customer',
-        //         username: credentials.username,
-        //     });
-        //     dispatch({type: 'LOGIN_CUSTOMER'});
-        //     props.history.push(`/customer-dash/${props.customer.id}`);
-        // } else if (
-        //     axiosWithAuth().find(
-        //     obj =>
-        //         obj.username === credentials.username &&
-        //         obj.password === credentials.password,
-        //     )
-        // ){
-        //     localStorage.setItem('token', 'stylist' + credentials.username);
-        //     localStorage.setItem('usertype', 'stylist');
-        //     dispatch({
-        //         type: 'LOGIN_SUCCESS',
-        //         usertype: 'stylist',
-        //         username: credentials.username,
-        //     });
-        //     dispatch({type: 'LOGIN_STYLIST'});
-        //     props.history.push(`/stylist-dash/${props.stylist.id}`);
-        // } else {
-        //     dispatch({type: 'LOGIN_FAILURE'})
+
+        if( 
+            testCustomers.find(
+            obj=>
+                obj.username === credentials.username &&
+                obj.password === credentials.password
+            )
+        ){
+            localStorage.setItem('token', 'customer' + credentials.username);
+            localStorage.setItem('usertype', 'customer');
+            dispatch({
+                type: 'LOGIN_SUCCESS',
+                usertype: 'customer',
+                username: credentials.username,
+            });
+            dispatch({type: 'LOGIN_CUSTOMER'});
+            props.history.push(`/customer-dash/${props.customer.id}`);
+        } else if (
+            testStylists.find(
+            obj =>
+                obj.username === credentials.username &&
+                obj.password === credentials.password,
+            )
+        ){
+            localStorage.setItem('token', 'stylist' + credentials.username);
+            localStorage.setItem('usertype', 'stylist');
+            dispatch({
+                type: 'LOGIN_SUCCESS',
+                usertype: 'stylist',
+                username: credentials.username,
+            });
+            dispatch({type: 'LOGIN_STYLIST'});
+            props.history.push(`/stylist-dash/${props.stylist.id}`);
+        } else {
+            dispatch({type: 'LOGIN_FAILURE'})}
     }
 
     const login = e => {
@@ -80,6 +79,15 @@ export default function Login (props) {
         .catch(err=>console.log('Access Denied, Cyborg!', err))
     }
 
+    if (localStorage.getItem('token')) {
+        if (localStorage.getItem('isStylist') === true) {
+          return <Redirect to={`/stylist-dash/${localStorage.getItem('id')}`} />
+        } 
+        else if (localStorage.getItem('isCustomer') === true){
+          return <Redirect to={`/customer-dash/${localStorage.getItem('id')}`} />
+        } 
+      }
+
     // const logout = e => {
     //     e.preventDefault();
     //     axiosWithAuth()
@@ -91,9 +99,6 @@ export default function Login (props) {
     //     .catch(err=>console.log('Have a nice trip', err))
     // }
     
-        // if (localStorage.getItem('token')){
-        //     return <ProtectedRoute path=`/${usertype}` component={`${usertype}}/>
-        // } 
         return (
             <LoginPage>
                 <img alt='girls hair getting trimmed' src='https://github.com/HairCare-Build-Week/Marketing-Page/blob/sierra-curtis/images/hair-hair-salon-hair-stylist-2799609.jpg?raw=true'/>

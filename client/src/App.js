@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-ro
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import {testStylists, testCustomers} from './testData';
+import {stylist} from './components/reducers/userReducer';
 
 // STYLING
 import GlobalStyle from './components/styled-components/GlobalStyle';
@@ -34,15 +36,15 @@ function App() {
           <Nav/>
           <Switch>
           <Route exact path='/' render={()=> <Redirect to='login'/>}/>
-          <Route path='/search' component={SearchPage}/>
+          <Route path='/search' component={SearchPage} testStylists = {testStylists}/>
           <Route path='/add-image' component={AddImage} />
           <PrivateRoute path='/review' component={Reviews} />
           <Route path="/signup" component={SignUp}/>
           <Route path="/login" component={Login}/>
           <Route path="/edit-bio" component={EditBio}/>
           <Route path="/edit-profile" component={EditProfile}/>
-          <Route path='/customer-dash' component={CustomerDash}/>
-          <Route path='/stylist-dash' component={StylistDash}/>
+          <Route path='/customer-dash' component={CustomerDash} props={testCustomers}/>
+          <Route path='/stylist-dash' component={StylistDash} stylist={stylist} />
         </Switch>
         </Router>
       </DataProvider>

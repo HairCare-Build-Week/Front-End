@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 const initialBio = {
     name: '',
@@ -50,15 +50,52 @@ const EditBio = props => {
 
 return (
     <div>
-        <h3>Edit Bio</h3>
+        <h3>Edit Profile</h3>
+        <ProfileImg>
+            <img src={props.imageUrl}/>
+            
+        </ProfileImg>
+        <NavLink to='add-image'><p>change image</p></NavLink>
    
-        <EditForm onSubmit={handleSubmit}>
+        <EditForm onSubmit={handleSubmit} id='edit-form'>
             <input 
-            name='bio'
-            type='text'
-            onChange={handleChange}
-            value={props.bio}
+                name='name'
+                type='text'
+                onChange={handleChange}
+                value={props.name}
+                placeholder='Name'
             />
+            <input 
+                name='salon'
+                type='text'
+                onChange={handleChange}
+                value={props.salon}
+                placeholder='Salon'
+            />
+
+            <input 
+                name='email'
+                type='text'
+                onChange={handleChange}
+                value={props.email}
+                placeholder='Email'
+            />
+
+            <input 
+                name='address'
+                type='text'
+                onChange={handleChange}
+                value={props.city}
+                placeholder='Address'
+            />
+            <textarea
+                form = 'edit-form'
+                name='bio'
+                type='text'
+                onChange={handleChange}
+                value={props.bio}> 
+            Enter Bio
+            </textarea>
             <div>
                 <p className='edit-btn-aft' onClick={handleSubmit}><Link to='/stylist-dash'>Save</Link></p>
             </div>
@@ -72,11 +109,29 @@ return (
 
 export default EditBio;
 
+const ProfileImg = styled.div`
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    margin: 0 auto;
+    border: 1px solid purple;
+`;
+
 const EditForm = styled.form`
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: .5px 1px 2px #000;
+    width: 30%;
     input{
-        height: 250px;
-        width: 400px;
         margin: 20px;
+        justify-content: center;
+    }
+    textarea{
+        margin: 20px;
+        height: 100px;
+        color: gray;
     }
     div{
         display: flex;
