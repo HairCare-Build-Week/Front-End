@@ -1,5 +1,5 @@
 {
-	"siteId": "0a4c670a-2782-4c66-86c6-157767ea0451"
+	"siteId": "0a4c670a-2782-4c66-86c6-157767ea0451",
 	[build]
 	command = "npm run build"
 	publish="path-to-react-app/build"
