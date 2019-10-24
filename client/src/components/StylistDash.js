@@ -6,7 +6,6 @@ import {useUserContext} from './contexts/UserContext';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
 import Reviews from './Reviews';
 
-//add edit options
 const initialBio = {
     name: '',
     salon: '',
@@ -23,15 +22,18 @@ const savedStylist = {
     salon: ''
 }
 
-const StylistDash = props => {
+export default function StylistDash(props) {
     const {data, dispatchData} = useDataContext();
-    const { user, dispatch } = useUserContext();
+    const {user, dispatch } = useUserContext();
     const {savedStylist, setSavedStylist} = useState();
 
     useEffect(()=> {
-        const stylistName = props.match.params.id;
-        dispatchData({type: 'SET_STYLIST', payload: stylistName})
+        const stylistId = Number(props.match.params.id);
+        const stylistData = data.stylists.find(el => el.id === stylistId);
+        dispatchData({type: 'SET_STYLIST', payload: stylistData})
     }, [])
+
+    if(!data.stylist){ return <Redirect to='/signup'></Redirect> }
 
     const handleAddStylist = e => {
         setSavedStylist({
@@ -91,13 +93,13 @@ const StylistDash = props => {
             <section className = 'about-me'>
                 <InfoBox>
                     <div>
-                        <img alt='profile of stylist, shop'/>
+                        <img src={data.stylist.imageUrl[0]} alt='profile of stylist, shop'/>
                     </div>
                     <div className='profile-text'>
-                        <h3>Salon Name:{data.salon}</h3>
-                        <h3>Name: {data.name}</h3>
-                        <p>Address: Lorem ipsum {data.address}</p>
-                        <p>Bio: Lorem ipsum {data.bio}</p>
+                        <h3>Salon Name:{data.stylist.salon}</h3>
+                        <h3>Name: {data.stylist.name}</h3>
+                        <p>Address: Lorem ipsum {data.stylist.city}</p>
+                        <p>Bio: Lorem ipsum {data.stylist.bio}</p>
 
                         {user.isStylist && (
                             <NavLink to='edit-bio' className='edit-btn'>Edit</NavLink>
@@ -116,12 +118,12 @@ const StylistDash = props => {
             <section className = 'gallery'>
                 <Gallery>
                     <div> 
-                        <NavLink to='add-image'>
+                        {/* <NavLink to='add-image'>
                             <SaveButton >+Add Image</SaveButton>
-                        </NavLink>
-                        {/* {user.isStylist &&(
+                        </NavLink> */}
+                        {user.isStylist &&(
                             <SaveButton onClick={addImage}>Add Image</SaveButton>
-                        )} */}  
+                        )} 
                     </div>  
                     <div>
                     <GalleryImg>
@@ -142,7 +144,6 @@ const StylistDash = props => {
     )
 }
 
-export default StylistDash;
 
 const SaveButton = styled.button`
     background: white;
