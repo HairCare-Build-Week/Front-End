@@ -1,13 +1,13 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
-import styled from 'styled-components';
+import React, {useState} from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import {testStylists, testCustomers} from './testData';
-import {stylist} from './components/reducers/userReducer';
 
 // STYLING
 import GlobalStyle from './components/styled-components/GlobalStyle';
+
+//DATA
+import {stylists, users} from './data';
 
 // CONTEXTS MANAGE STATE
 import UserProvider from './components/contexts/UserContext';
@@ -27,6 +27,8 @@ import EditProfile from './components/EditProfile';
 import AddImage from './components/AddImage';
 
 function App() {
+  const [stylist, setStylist] = useState(stylists)
+  const [user, setUser] = useState(users)
   return (
     <div className="App">
       <GlobalStyle/>
@@ -36,15 +38,30 @@ function App() {
           <Nav/>
           <Switch>
           <Route exact path='/' render={()=> <Redirect to='login'/>}/>
-          <Route path='/search' component={SearchPage} testStylists = {testStylists}/>
           <Route path='/add-image' component={AddImage} />
           <PrivateRoute path='/review' component={Reviews} />
           <Route path="/signup" component={SignUp}/>
           <Route path="/login" component={Login}/>
           <Route path="/edit-bio" component={EditBio}/>
           <Route path="/edit-profile" component={EditProfile}/>
-          <Route path='/customer-dash' component={CustomerDash} props={testCustomers}/>
-          <Route path='/stylist-dash' component={StylistDash} stylist={stylist} />
+
+          <Route 
+            path='/customer-dash' 
+            render={ props => 
+            <CustomerDash customer={user} {...props}/>
+          }/>
+          
+          <Route path='/stylist-dash/:dataID' 
+          render={props=> 
+          <StylistDash stylist={stylist} {...props}/>
+          } />
+
+          <Route path='/search' 
+            render={props=> 
+            <SearchPage stylist={stylist} {...props}/>
+          } />
+
+        
         </Switch>
         </Router>
       </DataProvider>
