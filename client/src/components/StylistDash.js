@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Redirect, NavLink} from 'react-router-dom';
 import styled from 'styled-components';
+
+
+//COMPONENTS
 import {useDataContext} from './contexts/DataContext';
 import {useUserContext} from './contexts/UserContext';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
 import Reviews from './Reviews';
+// import {stylist} from '../data';
+
 
 
 export default function StylistDash() {
@@ -12,37 +17,32 @@ export default function StylistDash() {
     const {user, dispatch } = useUserContext();
     const {savedStylist, setSavedStylist} = useState();
 
-    const stylist = 
-    {
-      id: 1,
-      username: 'Stella',
-      password: 'Stella',
-      name: 'Stella',
-      salon: 'Stella\'s Salon',
-      email: 'stella@gmail.com',
-      city: 'Dallas',
-      isStylist: true,
-      bio: 'Hi, I am Stella. I am a hairstylist.',
-      profile_img: 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-      images: [
+    let stylist = 
         {
-          imageUrl: 'https://images.unsplash.com/photo-1549236177-f9b0031756eb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
-        },
-        {
-          imageUrl: 'https://images.unsplash.com/photo-1554519515-242161756769?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
-        },
-        { imageUrl: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+          id: 1,
+          username: 'Stella',
+          password: 'Stella',
+          name: 'Stella',
+          salon: 'Stella\'s Salon',
+          email: 'stella@gmail.com',
+          city: 'Dallas',
+          userType: 'stylist',
+          bio: 'Hi, I am Stella. I am a hairstylist.',
+          profile_img: 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+          images: [
+            {
+              imageUrl: 'https://images.unsplash.com/photo-1549236177-f9b0031756eb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+            },
+            {
+              imageUrl: 'https://images.unsplash.com/photo-1554519515-242161756769?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+            },
+            { imageUrl: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+            },
+            {imageUrl: 'https://images.unsplash.com/photo-1552425883-1fd7e6a11c31?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80'
+            }
+          ]
         }
-      ]
-    }
-
-    // useEffect(()=> {
-    //     const stylistId = Number(props.match.params.id);
-    //     const stylistData = data.stylists.find(el => el.id === stylistId);
-    //     dispatchData({type: 'SET_STYLIST', payload: stylistData})
-    // }, [])
-
-    // if(!data.stylist){ return <Redirect to='/signup'></Redirect> }
+    
 
     const handleAddStylist = e => {
         setSavedStylist({
@@ -54,35 +54,49 @@ export default function StylistDash() {
     }
 
     const addStylist = savedStylist => {
-        axiosWithAuth()
-        .post(`/api/customer-dash`, savedStylist)
-        .then(res=> {
-            localStorage.setItem('token', res.data.payload)
-        })
-        .catch(err=> console.log(err))
+        // axiosWithAuth()
+        // .post(`/api/customer-dash`, savedStylist)
+        // .then(res=> {
+        //     localStorage.setItem('token', res.data.payload)
+        // })
+        // .catch(err=> console.log(err))
     }
     
     const addImage = newImage => {
         axiosWithAuth()
-        .post(`/api/stylist-dash/${stylist.id}`, newImage)
-        .then(res=> {
-            localStorage.setItem('token', res.data.payload)
-        })
-        .catch(err=> console.log(err))
+        // .post(`/api/stylist-dash/${stylist.id}`, newImage)
+        // .then(res=> {
+        //     localStorage.setItem('token', res.data.payload)
+        // })
+        // .catch(err=> console.log(err))
     }
 
     // useEffect(()=> {
     //     const bioToEdit = props.bio;
     //     if (bioToEdit) setBio(bioToEdit);
     // }, [props.bio, props.match.params.id]);
+
+    useEffect(()=>{
+        axiosWithAuth()
+        // .get(`/api/stylists/${id}`)
+        // .then(res=> { console.log(res.data);
+        //     setCustomer(res.data)
+        // })
+        // .catch(err=>{console.log(err.response)});
+    }, [])
+
+    // useEffect(()=> {
+        // const stylistId = (props.match.params.id);
+        // const stylistData = data.stylist.find(el => el.id === stylistId);
+        // dispatchData({type: 'SET_STYLIST', payload: stylistData})
+    // }, [])
     
-    if (!data.hasData){
-        return <Redirect to='/login'/>
-    };
+    // if (!data.hasData){return <Redirect to='/login'/>};
 
     return (
         <div>
             <h1>Stylist Profile</h1>
+
             <SaveButton onClick={addStylist}>Save Stylist</SaveButton>
 
             <section className = 'about-me'>

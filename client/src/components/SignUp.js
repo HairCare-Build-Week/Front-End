@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Form, {column} from "react-bootstrap/Form";
+import Form from "react-bootstrap/Form";
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
+
+//COMPONENTS
 import { useUserContext } from './contexts/UserContext';
 import { useDataContext } from './contexts/DataContext';
-// import { axiosWithAuth } from "./utilis/axiosWithAuth";
-import {testStylists, testCustomers} from '../testData';
+import { axiosWithAuth } from "./utilis/axiosWithAuth";
 
 export default function SignUp(props) {
   const { user, dispatch } = useUserContext();
