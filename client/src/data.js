@@ -1,4 +1,4 @@
-export let stylist = [
+export let stylists = [
     {
       id: 1,
       username: 'Stella',
@@ -33,7 +33,7 @@ export let stylist = [
       city: 'San Diego',
       userType: 'stylist',
       bio: 'Wassup? I am a hairstylist in SD.',
-      profile_img: 'https://images.unsplash.com/photo-1556755134-a67aafdbd686?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
+      profile_img: 'https://images.unsplash.com/photo-1541705897117-dc56b6637c9e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
       images: [
         {
           imageUrl: 'https://images.unsplash.com/photo-1522337094846-8a818192de1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
@@ -69,6 +69,32 @@ export let stylist = [
         }
       ]
     },
+    {
+      id: 5,
+      password: 'Adrian',
+      username: 'Adrian',
+      name: 'Adrian',
+      email: 'adrian@gmail.com',
+      salon: 'Cut It!',
+      city: 'Las Vegas',
+      userType: 'user',
+      bio: 'I am really really really good at cutting hair and trimming beards and stuff. Trust me.',
+      profile_img: 'https://images.unsplash.com/photo-1523532931495-f51ebf4bc3a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60',
+      images: [
+        {
+          imageUrl: 'https://images.unsplash.com/photo-1509704215857-7ac19c9842b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+        },
+        {
+          imageUrl: 'https://images.unsplash.com/photo-1497433550656-7fb185be365e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+        },
+        { imageUrl: 'https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
+        },
+        { imageUrl: 'https://images.unsplash.com/photo-1496124134604-7493ec63de68?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+        },
+        { imageUrl: 'https://images.unsplash.com/photo-1477764803552-6dd3f4744774?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+        }
+      ]
+    }
   ]
 
   export let users = [

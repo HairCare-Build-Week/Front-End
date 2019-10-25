@@ -4,15 +4,11 @@ import styled from 'styled-components';
 
 //COMPONENTS
 import {useDataContext} from './contexts/DataContext';
-import {axiosWithAuth} from './utilis/axiosWithAuth';
 import SavedCard from './SavedStylists';
-// import {users} from '../data';
-
 
 
 export default function CustomerDash() {
     const { data, dispatchData } = useDataContext();
-    // const {customer, setCustomer} = useState();
 
     let customer = {
           id: 4,

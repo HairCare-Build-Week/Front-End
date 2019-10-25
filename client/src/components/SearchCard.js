@@ -6,16 +6,17 @@ import {Link} from 'react-router-dom';
 
 
 function SearchCard(props)  {
-    const { profile_img, name, salon, city, bio } = props.stylist;
+    const { profile_img, name, salon, city, bio,id, email } = props.stylist;
 
     return (
         <Card>
-            <Link to={`/stylist-dash`}>
+            <Link to={`/stylist-dash/${id}`}>
                 <img src={profile_img} alt='stylist profile'/>
                 <div>
                     <h3>{salon}</h3>
                     <h4>{name}</h4>
                     <p>Address: {city}</p>
+                    <p>{email}</p>
                     <p>{bio}</p>
                 </div>
             </Link>
