@@ -1,121 +1,138 @@
 import React, {useState, useEffect} from 'react';
-import {axiosWithAuth} from './utilis/axiosWithAuth';
-import ProtectedRoute from './PrivateRoute';
 import styled from 'styled-components';
-import {NavLink, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, Switch, NavLink, Redirect} from 'react-router-dom';
+
+
+//COMPONENTS
 import { useUserContext } from './contexts/UserContext';
 import { useDataContext } from './contexts/DataContext';
-import {testStylists, testCustomers} from '../testData';
+import PrivateRoute from './PrivateRoute';
+import {axiosWithAuth} from './utilis/axiosWithAuth';
+import {users} from '../data';
 
 
-export default function Login (props) {
-    const { user, dispatch } = useUserContext();
-    const { data, dispatchData } = useDataContext();
 
-    const [credentials, setCredentials] = useState({
-        username: '',
-        password: '',
-        usertype: 'user',
-      });
-
-      useEffect(() => {
-        dispatchData({ type: 'IMPORT_CUSTOMER_DATA', payload: testCustomers});
-        dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: testStylists});
-        dispatchData({ type: 'SET_STYLIST', payload: testStylists});
-        dispatchData({ type: 'SET_CUSTOMER', payload: testCustomers});
-      }, []);
-
-    const handleChange = e =>{
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
+class Login extends React.Component {
+    state = {
+        credentials: {
+            username: '',
+            password: ''
+        }
     };
 
-    const handleSubmit = e => {
-        e.preventDefault();
+    //   useEffect(() => {
+    //     dispatchData({ type: 'IMPORT_CUSTOMER_DATA', payload: testCustomers});
+    //     dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: testStylists});
+    //     dispatchData({ type: 'SET_STYLIST', payload: testStylists});
+    //     dispatchData({ type: 'SET_CUSTOMER', payload: testCustomers});
+    //   }, []);
 
-        if( 
-            testCustomers.find(
-            obj=>
-                obj.username === credentials.username &&
-                obj.password === credentials.password
-            )
-        ){
-            localStorage.setItem('token', 'customer' + credentials.username);
-            localStorage.setItem('usertype', 'customer');
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                usertype: 'customer',
-                username: credentials.username,
-            });
-            dispatch({type: 'LOGIN_CUSTOMER'});
-            props.history.push(`/customer-dash/${props.customer.id}`);
-        } else if (
-            testStylists.find(
-            obj =>
-                obj.username === credentials.username &&
-                obj.password === credentials.password,
-            )
-        ){
-            localStorage.setItem('token', 'stylist' + credentials.username);
-            localStorage.setItem('usertype', 'stylist');
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                usertype: 'stylist',
-                username: credentials.username,
-            });
-            dispatch({type: 'LOGIN_STYLIST'});
-            props.history.push(`/stylist-dash/${props.stylist.id}`);
-        } else {
-            dispatch({type: 'LOGIN_FAILURE'})}
+      handleChange = e =>{
+        this.setState({
+            credentials: {
+                ...this.state.credentials,
+                [e.target.name]: e.target.value
+            }
+        });
+    };
+
+    login = e => {
+        e.preventDefault();
+        // axiosWithAuth()
+        // .post('/api/login', this.state.credentials)
+        // .then(res=> {
+        //     localStorage.setItem('token', res.data.payload);
+        //     this.props.history.push('/login');
+        // })
+        // .catch(err=>console.log('Access Denied, Cyborg!', err))
     }
 
-    const login = e => {
+    logout = e => {
         e.preventDefault();
-        axiosWithAuth()
-        .post('/api/login', credentials)
-        .then(res=> {
-            localStorage.setItem('token', res.data.payload);
-            props.history.push('/login');
-        })
-        .catch(err=>console.log('Access Denied, Cyborg!', err))
-    }
-
-    if (localStorage.getItem('token')) {
-        if (localStorage.getItem('isStylist') === true) {
-          return <Redirect to={`/stylist-dash/${localStorage.getItem('id')}`} />
-        } 
-        else if (localStorage.getItem('isCustomer') === true){
-          return <Redirect to={`/customer-dash/${localStorage.getItem('id')}`} />
-        } 
-      }
-
-    // const logout = e => {
-    //     e.preventDefault();
     //     axiosWithAuth()
-    //     .post('/api/signup', credentials)
+    //     .post('/api/login', this.state.credentials)
     //     .then(res=> {
     //         localStorage.setItem('token', !res.data.payload);
-    //         props.history.push('/logout');
+    //         this.props.history.push('/login');
     //     })
     //     .catch(err=>console.log('Have a nice trip', err))
+    }
+
+    handleSubmit = e => {
+            e.preventDefault();
+    }
+
+    //     if( 
+    //         testCustomers.find(
+    //         obj=>
+    //             obj.username === credentials.username &&
+    //             obj.password === credentials.password
+    //         )
+    //     ){
+    //         localStorage.setItem('token', 'customer' + credentials.username);
+    //         localStorage.setItem('usertype', 'customer');
+    //         dispatch({
+    //             type: 'LOGIN_SUCCESS',
+    //             usertype: 'customer',
+    //             username: credentials.username,
+    //         });
+    //         dispatch({type: 'LOGIN_CUSTOMER'});
+    //         props.history.push(`/customer-dash/${props.customer.id}`);
+    //     } else if (
+    //         testStylists.find(
+    //         obj =>
+    //             obj.username === credentials.username &&
+    //             obj.password === credentials.password,
+    //         )
+    //     ){
+    //         localStorage.setItem('token', 'stylist' + credentials.username);
+    //         localStorage.setItem('usertype', 'stylist');
+    //         dispatch({
+    //             type: 'LOGIN_SUCCESS',
+    //             usertype: 'stylist',
+    //             username: credentials.username,
+    //         });
+    //         dispatch({type: 'LOGIN_STYLIST'});
+    //         props.history.push(`/stylist-dash/${props.stylist.id}`);
+    //     } else {
+    //         dispatch({type: 'LOGIN_FAILURE'})}
     // }
-    
+
+      
+      render(){
+
+        // if (localStorage.getItem('token')) {
+        //     if (localStorage.getItem('isStylist') === true) {
+        //       return <PrivateRoute to={`/stylist-dash/${localStorage.getItem('id')}`} />
+        //     } 
+        //     else if (localStorage.getItem('isCustomer') === true){
+        //       return <PrivateRoute to={`/customer-dash/${localStorage.getItem('id')}`} />
+        //     } 
+        //   }
         return (
             <LoginPage>
                 <img alt='girls hair getting trimmed' src='https://github.com/HairCare-Build-Week/Marketing-Page/blob/sierra-curtis/images/hair-hair-salon-hair-stylist-2799609.jpg?raw=true'/>
-                <LoginForm onSubmit={handleSubmit}>
+
+                <LoginForm onSubmit={this.handleSubmit}>
                     <h3>Welcome Back</h3>
-                    <input type='text' name='username' value={credentials.username} 
-                    placeholder="username" onChange={handleChange}/>
+                    <input type='text' name='username' value={this.state.credentials.username} 
+                    placeholder="username" onChange={this.handleChange}/>
 
-                    <input type='password' name='password' value={credentials.password} placeholder="password" onChange={handleChange}/>
+                    <input type='password' name='password' value={this.state.credentials.password} placeholder="password" onChange={this.handleChange}/>
 
-                    <button type='submit' onClick={login}>Login</button>
+                    <button type='submit' onClick={this.login}>Login</button>
+                    <button type='submit' onClick={this.logout}>Logout</button>
                     <NavLink to='/signup'><button>Signup</button></NavLink>
-
                 </LoginForm>
+
             </LoginPage>
         );
-};
+    }
+}
+
+export default Login;
+
+
 
 const LoginPage = styled.div`
     img{

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Form, {column} from "react-bootstrap/Form";
+import Form from "react-bootstrap/Form";
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
+
+//COMPONENTS
 import { useUserContext } from './contexts/UserContext';
 import { useDataContext } from './contexts/DataContext';
-// import { axiosWithAuth } from "./utilis/axiosWithAuth";
-import {testStylists, testCustomers} from '../testData';
+import { axiosWithAuth } from "./utilis/axiosWithAuth";
 
 export default function SignUp(props) {
   const { user, dispatch } = useUserContext();
@@ -25,35 +26,35 @@ export default function SignUp(props) {
   setRegistrationInfo({ ...registrationInfo, [e.target.name]: e.target.value });
 
   const handleSubmit = e => {
-    e.preventDefault();
+    e.preventDefault();}
 
-    const users = [...testCustomers, ...testStylists];
-    if (users.map(obj => obj.username).includes(registrationInfo.username)) {
-      dispatch({ type: 'REGISTRATION_FAILURE' });
-    } else {
-      localStorage.setItem('token', 'register' + registrationInfo.username);
-      localStorage.setItem('usertype' + registrationInfo.isStylist);
-      dispatch({
-        type: 'REGISTRATION_SUCCESS',
-        username: registrationInfo.username,
-        city: registrationInfo.city,
-      });
-      if(user === 'stylist'){
-        props.history.push(`/stylist-dash/${registrationInfo.id}`)
-      } else {
-        props.history.push(`/customer-dash/${registrationInfo.id}`)
+    // const users = [...testCustomers, ...testStylists];
+    // if (users.map(obj => obj.username).includes(registrationInfo.username)) {
+    //   dispatch({ type: 'REGISTRATION_FAILURE' });
+    // } else {
+    //   localStorage.setItem('token', 'register' + registrationInfo.username);
+    //   localStorage.setItem('usertype' + registrationInfo.isStylist);
+    //   dispatch({
+    //     type: 'REGISTRATION_SUCCESS',
+    //     username: registrationInfo.username,
+    //     city: registrationInfo.city,
+    //   });
+    //   if(user === 'stylist'){
+    //     props.history.push(`/stylist-dash/${registrationInfo.id}`)
+    //   } else {
+    //     props.history.push(`/customer-dash/${registrationInfo.id}`)
 
-      }
-      }
-    };
+    //   }
+    //   }
+    // };
 
-    if (localStorage.getItem('token')) {
-      if (user.usertype === 'stylist') {
-        return <Redirect to='/stylist-dash' />;
-      } else {
-        return <Redirect to={`/customer-dash/${localStorage.getItem('customer')}`} />;
-      }
-    }
+    // if (localStorage.getItem('token')) {
+    //   if (user.usertype === 'stylist') {
+    //     return <Redirect to='/stylist-dash' />;
+    //   } else {
+    //     return <Redirect to={`/customer-dash/${localStorage.getItem('customer')}`} />;
+    //   }
+    // }
 
   return (
     <SignupPage>

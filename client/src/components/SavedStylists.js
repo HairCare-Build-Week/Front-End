@@ -12,7 +12,7 @@ function SavedCard(props) {
  return(
     <Card>
         <h4>X</h4>
-        <NavLink to={`/stylist-dash`}>
+        <NavLink to={`/stylist-dash/${id}`}>
             <img alt='saved stylists profile' src={profile_img}/>
             <p>{name}</p>
         </NavLink>   
